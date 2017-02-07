@@ -41,12 +41,8 @@ namespace WpwBackend
 
             services.AddSwaggerGen();
 
-            //services.AddSwaggerGen(c =>
-            //{
-                
-            //    c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-            //});
-            }
+            services.AddCors();
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -54,9 +50,8 @@ namespace WpwBackend
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            //app.UseApplicationInsightsRequestTelemetry();
-
-            //app.UseApplicationInsightsExceptionTelemetry();
+            app.UseCors(builder =>
+                   builder.WithOrigins("http://localhost:4310"));
 
             app.UseMvc();
 
